@@ -1,0 +1,26 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        def recurse(node1, node2):
+            if not node1 and not node2:
+                return True
+            elif node1 and node2 and node1.val == node2.val:
+                is_symmentric = recurse(node1.left, node2.right)
+                if is_symmentric:
+                    is_symmentric = recurse(node1.right, node2.left)
+
+                return is_symmentric
+            else:
+                return False
+
+        return not root or recurse(root.left, root.right)
