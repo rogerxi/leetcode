@@ -1,0 +1,22 @@
+class Solution(object):
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+#         # DP with O(n) space.
+#         ways = [0] * (n + 1)
+#         ways[0] = ways[1] = 1
+#         for i in xrange(2, n + 1):
+#             ways[i] = ways[i - 1] + ways[i - 2]
+
+#         return ways[n]
+
+
+
+        # DP with O(1) space.
+        way_one_step, way_two_step = 1, 1
+        for i in xrange(2, n + 1):
+            way_one_step, way_two_step = way_one_step + way_two_step, way_one_step
+
+        return way_one_step
