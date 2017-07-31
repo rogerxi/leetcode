@@ -1,0 +1,34 @@
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+#         # DP. (Everybody can come up it with.)
+#         if not prices:
+#             return 0
+
+#         days = len(prices)
+#         max_profit, min_price = 0, prices[0]
+#         for i in xrange(1, days):
+#             max_profit = max(max_profit, prices[i] - min_price)
+#             min_price = min(min_price, prices[i])
+
+#         return max_profit
+
+
+
+        # Local maximum.  (Kadane's Algorithm??)
+        if not prices:
+            return 0
+
+        days = len(prices)
+        max_profit, local_max_profit = 0, 0
+        for i in xrange(1, days):
+            local_max_profit += prices[i] - prices[i - 1]
+            if local_max_profit < 0:
+                local_max_profit = 0
+            else:
+                max_profit = max(max_profit, local_max_profit)
+
+        return max_profit
