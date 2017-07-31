@@ -1,0 +1,31 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isSubtree(self, s, t):
+        """
+        :type s: TreeNode
+        :type t: TreeNode
+        :rtype: bool
+        """
+        # Recursion.
+        def recurse(s, t, root_equal=False):
+            if not s and not t:
+                return True
+            elif s and t and s.val == t.val and recurse(s.left, t.left, True) and recurse(s.right, t.right, True):
+                return True
+
+            if not root_equal and s:
+                if s.left and recurse(s.left, t):
+                    return True
+
+                if s.right and recurse(s.right, t):
+                    return True
+
+            return False
+
+        return recurse(s, t, False)
