@@ -1,0 +1,49 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def rob(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root:
+            return 0
+
+#         # DP.
+#         rob_ways = []
+#         stack = [(root, None)]
+#         while stack:
+#             node, parent = stack.pop()
+#             length = len(rob_ways)
+#             for way in rob_ways[0:length]:
+#                 if parent not in way:
+#                     rob_ways.append(way.union({node}))
+
+#             if node.right:
+#                 stack.append((node.right, node))
+
+#             if node.left:
+#                 stack.append((node.left, node))
+            
+#             rob_ways.append({node})
+
+#         return max([sum(node.val for node in way) for way in rob_ways])
+    
+    
+
+        # DFS.        
+        def dfs(node):
+            """Return (total amount WITH robbing the node, total amount WITHOUT robbing the node)."""
+            if node.left or node.right:
+                amounts_left = dfs(node.left) if node.left else [0, 0]
+                amounts_right = dfs(node.right) if node.right else [0, 0]
+                return [amounts_left[1] + amounts_right[1] + node.val, max(amounts_left) + max(amounts_right)]
+            else:
+                return [node.val, 0]
+        
+        return max(dfs(root))
