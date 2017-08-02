@@ -1,0 +1,36 @@
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        # Iteration.
+        perms = []
+        if nums:
+            perms.append(nums[0:1])
+            for i in nums[1:]:
+                length = len(perms)
+                for j in xrange(length):
+                    p = perms[j]
+                    for k in xrange(len(p) + 1):
+                        perms.append(p[0:k] + [i] + p[k:])
+
+                perms = perms[length:]
+
+        return perms
+
+    
+    
+        # Recursion.
+        def recurse(nums):
+            perms = []
+            if len(nums) == 1:
+                perms.append(nums)
+            else:
+                for p in recurse(nums[1:]):
+                    for i in xrange(len(nums)):
+                        perms.append(p[0:i] + [nums[0]] + p[i:])
+            
+            return perms
+    
+        return recurse(nums)
