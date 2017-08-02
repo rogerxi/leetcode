@@ -1,0 +1,54 @@
+class Solution(object):
+    def findTargetSumWays(self, nums, S):
+        """
+        :type nums: List[int]
+        :type S: int
+        :rtype: int
+        """
+        # A bit like brute-force.
+#         def find_ways(index, targeted_sum):
+#             """
+#             :type index: int
+#             """
+#             ways = 0
+#             if index == length - 1:
+#                 if targeted_sum + nums[index] == 0:
+#                     ways += 1
+
+#                 if targeted_sum - nums[index] == 0:
+#                     ways += 1
+#             else:
+#                 # Sign + (plus).
+#                 if subtotals[index + 1] >= targeted_sum - nums[index] >= 0 - subtotals[index + 1]:
+#                     ways += find_ways(index + 1, targeted_sum - nums[index])
+
+#                 # Sign - (minus).
+#                 if subtotals[index + 1] >= targeted_sum + nums[index] >= 0 - subtotals[index + 1]:
+#                     ways += find_ways(index + 1, targeted_sum + nums[index])
+            
+#             return ways
+
+#         length = len(nums)
+#         subtotals = [0] * (length + 1)  # subtotal from back.
+#         for i in xrange(length - 1, -1, -1):
+#             subtotals[i] = subtotals[i + 1] + nums[i]
+
+#         return find_ways(0, S)
+
+
+        
+        # DP.
+        if not nums:
+            return 0
+
+        from collections import Counter
+        sums_counter = Counter([nums[0], -nums[0]])
+        for i in nums[1:]:
+            sums_counter_temp = Counter()
+            for j in sums_counter:
+                sums_counter_temp[j + i] += sums_counter[j]
+                sums_counter_temp[j - i] += sums_counter[j]
+            
+            sums_counter = sums_counter_temp
+                
+        return sums_counter[S]
