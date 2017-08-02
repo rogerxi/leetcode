@@ -1,0 +1,24 @@
+class Solution(object):
+    def findUnsortedSubarray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+
+        length = len(nums)
+        min_val, max_val = nums[-1], nums[0]
+        index_fr, index_to = 1, 0
+        for i in xrange(1, length):
+            if nums[i] < max_val:
+                index_to = i
+            else:
+                max_val = nums[i]
+
+            if nums[length - 1 - i] > min_val:
+                index_fr = length - 1 - i
+            else:
+                min_val = nums[length - 1 - i]
+        
+        return index_to - index_fr + 1
