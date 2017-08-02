@@ -1,0 +1,16 @@
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # O(n) solution.
+        if not nums:
+            return 0
+
+        max_sum = local_sum = nums[0]
+        for i in xrange(1, len(nums)):
+            local_sum = max(local_sum + nums[i], nums[i])   # Sum of contiguous subarray.
+            max_sum = max(max_sum, local_sum)
+
+        return max_sum
