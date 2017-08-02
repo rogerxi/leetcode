@@ -1,0 +1,40 @@
+class Solution(object):
+    def reconstructQueue(self, people):
+        """
+        :type people: List[List[int]]
+        :rtype: List[List[int]]
+        """
+#         # O(n^2).
+#         from collections import defaultdict
+
+#         if not people:
+#             return []
+
+#         # Mapping from k to list of (h, k).
+#         count_to_people_map = defaultdict(list)
+#         for p in people:
+#             count_to_people_map[p[1]].append(p)
+
+#         queue = []
+#         while count_to_people_map:
+#             count_to_people_map[0] = sorted(count_to_people_map[0], key=lambda x: x[0], reverse=True)
+#             p = count_to_people_map[0].pop()
+#             queue.append(p)
+#             count_to_people_map_temp = defaultdict(list)
+#             for count, ps in count_to_people_map.iteritems():
+#                 for h, k in ps:
+#                     count_to_people_map_temp[count - 1 if h <= p[0] else count].append([h, k])
+            
+#             count_to_people_map = count_to_people_map_temp
+            
+#         return queue
+
+
+
+        # Concise solution.
+        people.sort(key=lambda (h, k): (-h, k))
+        queue = []
+        for h, k in people:
+            queue.insert(k, (h, k))
+
+        return queue
