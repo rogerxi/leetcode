@@ -1,0 +1,25 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def diameterOfBinaryTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        def recurse(node):
+            if not node:
+                return 0
+
+            longest_path_left = recurse(node.left) + 1 if node.left else 0
+            longest_path_right = recurse(node.right) + 1 if node.right else 0
+            self.longest_path = max(self.longest_path, longest_path_left + longest_path_right)
+            return max(longest_path_left, longest_path_right)
+
+        self.longest_path = 0
+        recurse(root)
+        return self.longest_path
