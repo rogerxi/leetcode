@@ -1,0 +1,17 @@
+class Solution(object):
+    def subarraySum(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        from collections import Counter
+        subtotal_counter = Counter()
+        subtotal_counter[0] = 1
+        count = subtotal = 0
+        for i in nums:
+            subtotal += i
+            count += subtotal_counter[subtotal - k]
+            subtotal_counter[subtotal] += 1
+            
+        return count
