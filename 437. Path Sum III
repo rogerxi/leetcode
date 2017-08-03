@@ -1,0 +1,31 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def pathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: int
+        """
+        # O(n(logn)^2) time complexity.
+        def recurse(node, sum_counter):
+            if not node:
+                return
+
+            sum_counter_new = dict()
+            for c in sum_counter:
+                sum_counter_new[c + node.val] = sum_counter[c]
+
+            sum_counter_new[node.val] = sum_counter_new.get(node.val, 0) + 1
+            self.count += sum_counter_new.get(sum, 0)
+            recurse(node.left, sum_counter_new)
+            recurse(node.right, sum_counter_new)
+
+        self.count = 0
+        recurse(root, dict())
+        return self.count
