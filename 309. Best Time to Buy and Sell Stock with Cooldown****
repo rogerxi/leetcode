@@ -1,0 +1,16 @@
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        # Considering max profit if sell or not sell.
+        profit_sell, profit_not_sell, profit_not_sell_two_days = 0, 0, 0
+        for d in xrange(1, len(prices)):
+            profit_sell, profit_not_sell, profit_not_sell_two_days = (
+                max(profit_sell, profit_not_sell_two_days) + prices[d] - prices[d - 1],
+                max(profit_sell, profit_not_sell),
+                profit_not_sell,
+            )
+
+        return max(profit_sell, profit_not_sell)
