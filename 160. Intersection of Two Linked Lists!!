@@ -1,0 +1,42 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def getIntersectionNode(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        def get_list_length(node):
+#             # Note: Recursion depth (1000 by default) could be limited.
+#             if not node:
+#                 return 0
+
+#             return get_list_length(node.next) + 1
+
+            length = 0
+            while node:
+                length += 1
+                node = node.next
+
+            return length
+
+
+        length_A = get_list_length(headA)
+        length_B = get_list_length(headB)
+        while length_A > length_B:
+            headA = headA.next
+            length_A -= 1
+
+        while length_B > length_A:
+            headB = headB.next
+            length_B -= 1
+
+        while headA != headB:
+            headA = headA.next
+            headB = headB.next
+
+        return headA
