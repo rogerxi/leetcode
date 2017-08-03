@@ -1,0 +1,59 @@
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+#         # Using log().
+#         from math import log
+
+#         log_sum = 0
+#         negative_sign = False
+#         zeros_count = 0
+#         for i in nums:
+#             if i == 0:
+#                 zeros_count += 1
+#             elif i < 0:
+#                 negative_sign = not negative_sign
+#                 log_sum += log(abs(i), 2)
+#             else:
+#                 log_sum += log(i, 2)
+
+#         if zeros_count == len(nums) or zeros_count > 1:
+#             return [0] * len(nums)
+#         else:
+#             products = []
+#             if zeros_count == 0:
+#                 for i in nums:
+#                     product = int(round(2 ** (log_sum - log(abs(i), 2))))
+#                     if negative_sign is not (i < 0):
+#                         product = -product
+
+#                     products.append(product)
+#             else:
+#                 for i in nums:
+#                     if i == 0:
+#                         product = int(round(2 ** log_sum))
+#                         if negative_sign is not (i < 0):
+#                             product = -product
+#                     else:
+#                         product = 0
+
+#                     products.append(product)
+
+#             return products
+
+
+
+        # Forward and backward multiplications.
+        length = len(nums)
+        products = [1] + [0] * length
+        for i in xrange(1, length + 1):
+            products[i] = products[i - 1] * nums[i - 1]
+
+        product = 1
+        for i in xrange(length, 0, -1):
+            products[i] = products[i - 1] * product
+            product *= nums[i - 1]
+
+        return products[1:]
