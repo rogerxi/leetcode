@@ -1,0 +1,69 @@
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+#         # Priority Queue (heapq): O(n) time complexity.
+#         from collections import Counter
+#         import heapq
+
+#         tasks_counter = Counter(tasks)
+#         tasks_to_schedule = [(-c, t) for t, c in tasks_counter.iteritems()]     # List of (count, task). 
+#         tasks_scheduled = []    # List of (ranking, task), storing the tasks which need more scheduling.
+#         heapq.heapify(tasks_to_schedule)
+#         intervals_count = 0
+#         while tasks_counter:
+#             intervals_count += 1
+#             if tasks_scheduled:
+#                 ranking, task = tasks_scheduled[0]
+#                 if intervals_count - ranking > n:
+#                     _, task = heapq.heappop(tasks_scheduled)
+#                     heapq.heappush(tasks_to_schedule, (-tasks_counter[task], task))
+
+#             if tasks_to_schedule:
+#                 _, task = heapq.heappop(tasks_to_schedule)
+#                 tasks_counter -= Counter([task])
+#                 if tasks_counter[task] > 0:
+#                     heapq.heappush(tasks_scheduled, (intervals_count, task))
+
+#         return intervals_count
+
+
+
+        # O(n) time complexity.
+        size = len(tasks)
+        task_to_count_map = dict()    # Mapping from task to (count, ranking). The smaller ranking, the higher priority.
+        for t in tasks:
+            if t in task_to_count_map:
+                task_to_count_map[t][0] += 1
+            else:
+                task_to_count_map[t] = [1, -n]
+
+        intervals_count = 0
+        while size > 0:
+            intervals_count += 1
+            next_task, most_frequency, max_distance = None, 0, 0
+            for t, (count, ranking) in task_to_count_map.iteritems():
+                max_distance = max(max_distance, intervals_count - ranking)
+                if intervals_count - ranking > n and count > most_frequency:
+                    next_task = t
+                    most_frequency = count
+
+            if max_distance < n:
+                intervals_count += n - max_distance
+
+            if next_task:
+                size -= 1
+                count, _ = task_to_count_map[next_task]
+                if count <= 1:
+                    task_to_count_map.pop(next_task)
+                else:
+                    task_to_count_map[next_task] = [count - 1, intervals_count]
+
+        return intervals_count
+
+
+
+        # One more solution is brilliant. Think about it!!!
