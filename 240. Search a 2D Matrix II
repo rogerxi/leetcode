@@ -1,0 +1,23 @@
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        # Think about access from right-top point or bottom-left point.
+        if not matrix:
+            return False
+
+        height, width = len(matrix), len(matrix[0])
+        # Access from right-top point.
+        x, y = 0, width - 1
+        while x < height and y >= 0:
+            if matrix[x][y] == target:
+                return True
+            elif matrix[x][y] > target:
+                y -= 1
+            else:
+                x += 1
+
+        return False
