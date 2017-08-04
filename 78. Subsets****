@@ -1,0 +1,16 @@
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        subsets = [[]]
+        for n in nums:
+            length = len(subsets)
+            for s in subsets[0:length]:
+                subsets.append(s + [n])
+
+        return subsets
+
+
+        # One more clever solution there: bit manipulation! Think about it.
