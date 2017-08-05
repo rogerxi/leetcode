@@ -1,0 +1,50 @@
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+#         # Time Limit Exceeded.
+#         # Time complexity: O(n*m*k), n: length of s; m: size of wordDict; k: length of word in wordDict.
+#         self.char_map = {'is_word': True}  # Mapping from char to {'is_word': True / False, char: char_map}.
+#         for word in wordDict:
+#             char_map_sub = self.char_map
+#             for i in xrange(len(word)):
+#                 char = word[i]
+#                 if char not in char_map_sub:
+#                     char_map_sub[char] = {'is_word': False}
+
+#                 char_map_sub = char_map_sub[char]
+#                 if i == len(word) - 1:
+#                     char_map_sub['is_word'] = True
+
+#         def check_substr_existance(s, char_map):
+#             if not s and (not char_map or char_map['is_word']):
+#                 return True
+#             elif s:
+#                 if s[0] not in char_map:
+#                     return False
+#                 elif char_map[s[0]]['is_word'] and check_substr_existance(s[1:], self.char_map):
+#                     return True
+
+#                 if check_substr_existance(s[1:], char_map[s[0]]):
+#                     return True
+
+#             return False
+
+#         return check_substr_existance(s, self.char_map)
+
+
+
+        # Time complexity: O(n^2), n: length of s.
+        # Space complexity: O(n^2).
+        word_set = set(wordDict)
+        word_indexes = [0]
+        for i, c in enumerate(s):
+            for index in word_indexes:
+                if s[index:i + 1] in word_set:
+                    word_indexes.append(i + 1)
+                    break
+
+        return word_indexes[-1] == len(s)
