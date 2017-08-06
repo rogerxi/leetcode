@@ -1,0 +1,16 @@
+class Solution(object):
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        if not nums:
+            return True
+
+        index_dest = index_backwards = len(nums) - 1
+        while index_backwards > 0:
+            index_backwards -= 1
+            if nums[index_backwards] != 0 and index_backwards + nums[index_backwards] >= index_dest:
+                index_dest = index_backwards
+
+        return nums[0] >= index_dest
