@@ -1,0 +1,30 @@
+class Solution(object):
+    def exist(self, board, word):
+        """
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+        """
+        def dfs(word, i0, j0, accessed_index):
+            if not word:
+                return True
+
+            for x, y in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+                i1, j1 = i0 + x, j0 + y
+                if 0 <= i1 < self.height and 0 <= j1 < self.width and board[i1][j1] == word[0] and (i1, j1) not in accessed_index and dfs(word[1:], i1, j1, accessed_index.union(set([(i1, j1)]))):
+                    return True
+
+            return False
+
+        if not word:
+            return True
+        elif not board:
+            return False
+
+        self.height, self.width = len(board), len(board[0])
+        for i in xrange(self.height):
+            for j in xrange(self.width):
+                if board[i][j] == word[0] and dfs(word[1:], i, j, {(i, j)}):
+                    return True
+
+        return False
