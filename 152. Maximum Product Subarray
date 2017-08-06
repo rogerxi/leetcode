@@ -1,0 +1,13 @@
+class Solution(object):
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # When problems are related to contiguous arrays, firstly think about the solution ACCEPT OR REJECT.
+        max_prod = last_max_prod = last_min_prod = nums[0]
+        for n in nums[1:]:
+            last_max_prod, last_min_prod = max([n * last_max_prod, n * last_min_prod, n]), min([n * last_max_prod, n * last_min_prod, n])
+            max_prod = max(max_prod, last_max_prod)
+
+        return max_prod
