@@ -1,0 +1,39 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        def recurse(node):
+            if not node:
+                return True, 0, 0
+            elif (node.left and node.left.val >= node.val) or (node.right and node.right.val <= node.val):
+                return False, 0, 0
+
+            min_val = max_val = node.val
+            if node.left:
+                is_left_valid, left_min_val, left_max_val = recurse(node.left)
+                if not is_left_valid or left_max_val >= node.val:
+                    return False, 0, 0
+
+                min_val = min(min_val, left_min_val)
+                max_val = max(max_val, left_max_val)
+
+            if node.right:
+                is_right_valid, right_min_val, right_max_val = recurse(node.right)
+                if not is_right_valid or right_min_val <= node.val:
+                    return False, 0, 0
+
+                min_val = min(min_val, right_min_val)
+                max_val = max(max_val, right_max_val)
+
+            return True, min_val, max_val
+
+        return recurse(root)[0]
