@@ -1,0 +1,18 @@
+class Solution(object):
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        from collections import defaultdict
+
+        anagrams_grouped = defaultdict(list)    # Mapping from hash value to string.
+        base_val = ord('a')
+        for s in strs:
+            letters_count = [0] * 26
+            for c in s:
+                letters_count[ord(c) - base_val] += 1
+
+            anagrams_grouped[tuple(letters_count)].append(s)
+
+        return anagrams_grouped.values()
