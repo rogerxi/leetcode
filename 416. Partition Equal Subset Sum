@@ -1,0 +1,64 @@
+class Solution(object):
+    def canPartition(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+#         if not nums:
+#             return True
+
+#         max_val = sum_val = 0
+#         for n in nums:
+#             max_val = max(max_val, n)
+#             sum_val += n
+
+#         target_sum = sum_val / 2
+#         if sum_val % 2 != 0 or max_val > target_sum:
+#             return False
+
+#         sub_sums = set()
+#         for n in nums:
+#             if n == target_sum:
+#                 return True
+
+#             for s in list(sub_sums):
+#                 sum_ = s + n
+#                 if sum_ == target_sum:
+#                     return True
+#                 elif sum_ < target_sum:
+#                     sub_sums.add(sum_)
+
+#             sub_sums.add(n)
+
+#         return False
+
+
+
+        # Knapsack solution.
+        if not nums:
+            return True
+
+        max_val = sum_val = 0
+        for n in nums:
+            max_val = max(max_val, n)
+            sum_val += n
+
+        target_sum = sum_val / 2
+        if sum_val % 2 != 0 or max_val > target_sum:
+            return False
+
+        is_partitioned = [True] + [False] * target_sum
+        for n in nums:
+            if n == target_sum:
+                return True
+
+            for i in xrange(target_sum, 0, -1):
+                if i >= n:
+                    is_partitioned[i] = is_partitioned[i] or is_partitioned[i - n]
+                else:
+                    break
+
+            if is_partitioned[target_sum]:
+                return True
+
+        return False
