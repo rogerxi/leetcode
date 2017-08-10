@@ -1,0 +1,77 @@
+class TrieNode(object):
+    def __init__(self, val=None):
+        self.val = val
+        self.ending = False     # If one word ends with the val, False by default.
+        self.nexts = dict()     # Mapping from val to Trie nodes.
+
+
+class Trie(object):
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.root = TrieNode()
+        
+
+    def insert(self, word):
+        """
+        Inserts a word into the trie.
+        :type word: str
+        :rtype: void
+        """
+        if not word:
+            return
+
+        node = self.root
+        for letter in word:
+            if letter not in node.nexts:
+                node.nexts[letter] = TrieNode(letter)
+
+            node = node.nexts[letter]
+
+        node.ending = True
+
+    def search(self, word):
+        """
+        Returns if the word is in the trie.
+        :type word: str
+        :rtype: bool
+        """
+        if not word:
+            return False
+
+        node = self.root
+        for letter in word:
+            if letter in node.nexts:
+                node = node.nexts[letter]
+            else:
+                return False
+
+        return node.ending
+        
+
+    def startsWith(self, prefix):
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        :type prefix: str
+        :rtype: bool
+        """
+        if not prefix:
+            return True
+
+        node = self.root
+        for letter in prefix:
+            if letter in node.nexts:
+                node = node.nexts[letter]
+            else:
+                return False
+
+        return True
+        
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
