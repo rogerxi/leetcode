@@ -1,0 +1,109 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+#         # Get the paths, then compare them.
+#         # Time complexity:  O(n).   n: number of nodes.
+#         # Space complexity: O(n).   n: number of nodes.
+#         def get_path(node, target):
+#             if node:
+#                 if node == target:
+#                     return [node]
+
+#                 path_left = get_path(node.left, target)
+#                 if path_left:
+#                     return [node] + path_left
+
+#                 path_right = get_path(node.right, target)
+#                 if path_right:
+#                     return [node] + path_right
+
+#             return []
+
+#         path_p, path_q = get_path(root, p), get_path(root, q)
+#         lca = None
+#         for i in xrange(min(len(path_p), len(path_q))):
+#             if path_p[i] == path_q[i]:
+#                 lca = path_p[i]
+#             else:
+#                 break
+
+#         return lca
+
+
+
+#         # DFS - recursion, traversal once.  (Time Limit Exceeded)
+#         # Time complexity:  O(n).   n: number of nodes.
+#         # Space complexity: O(logn).
+#         def get_path(node, path):
+#             if node and self.targets:
+#                 if node in self.targets:
+#                     self.targets.remove(node)
+#                     if self.targets:
+#                         self.candidates = path + [node]
+
+#                 if self.targets and node.left:
+#                     get_path(node.left, path + [node])
+
+#                 if self.targets and node.right:
+#                     get_path(node.right, path + [node])
+
+#                 if self.targets and self.candidates and self.candidates[-1] == node:
+#                     self.candidates.pop()
+
+#         self.targets = set([p, q])
+#         self.candidates = []
+#         get_path(root, [])
+#         return self.candidates[-1] if self.candidates else None
+
+
+
+#         # DFS - recursion, traversal once.  (Time Limit Exceeded)
+#         # Time complexity:  O(n).   n: number of nodes.
+#         # Space complexity: O(logn).
+#         def get_path(node, path):
+#             if node and self.targets:
+#                 if node in self.targets:
+#                     self.paths.append(path + [node])
+#                     self.targets.remove(node)
+
+#                 if self.targets and node.left:
+#                     get_path(node.left, path + [node])
+
+#                 if self.targets and node.right:
+#                     get_path(node.right, path + [node])
+
+#         self.targets = set([p, q])
+#         self.paths = []
+#         get_path(root, [])
+#         lca = None
+#         if len(self.paths) == 2:
+#             for i in xrange(min(len(self.paths[0]), len(self.paths[1]))):
+#                 if self.paths[0][i] == self.paths[1][i]:
+#                     lca = self.paths[0][i]
+#                 else:
+#                     break
+
+#         return lca
+
+
+
+        # If p in the tree, while q not. The LCA is p??? Excuse me???
+        # Time complexity:  O(n).   n: number of nodes.
+        # Space complexity: O(logn).
+        if root in (None, p, q):
+            return root
+
+        left, right = self.lowestCommonAncestor(root.left, p, q), self.lowestCommonAncestor(root.right, p, q)
+        return root if left and right else left or right
