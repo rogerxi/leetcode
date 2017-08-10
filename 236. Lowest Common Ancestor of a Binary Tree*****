@@ -107,3 +107,37 @@ class Solution(object):
 
         left, right = self.lowestCommonAncestor(root.left, p, q), self.lowestCommonAncestor(root.right, p, q)
         return root if left and right else left or right
+
+
+
+
+
+        # Stack.
+        # Time complexity:  O(n).   n: number of nodes.
+        # Space complexity: O(n).
+        node_to_parent_map = {root: None}
+        stack = [root]
+        while p not in node_to_parent_map or q not in node_to_parent_map:
+            node = stack.pop()
+            if node.left:
+                node_to_parent_map[node.left] = node
+                stack.append(node.left)
+
+            if node.right:
+                node_to_parent_map[node.right] = node
+                stack.append(node.right)
+
+        parents = set()
+        node = p
+        while node:
+            parents.add(node)
+            node = node_to_parent_map[node]
+
+        node = q
+        while node:
+            if node in parents:
+                break
+            else:
+                node = node_to_parent_map[node]
+
+        return node
