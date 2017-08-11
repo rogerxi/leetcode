@@ -1,0 +1,38 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def findMode(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        # Time complexity:  O(n).
+        # Space complexity: O(0) + O(n).    O(n) for returned structure.
+        def recurse(node):
+            return recurse(node.left) + [node.val] + recurse(node.right) if node else []
+
+        inorder = recurse(root)
+        inorder.insert(0, None)     # The assumptive element.
+        inorder.insert(0, -1)       # The index of element to be compared to.
+        inorder.insert(0, 1)        # The count of modes.
+        if len(inorder) > 3:
+            inorder[1] = len(inorder) - 1
+            for i in range(len(inorder) - 2, 1, -1):
+                if inorder[i] != inorder[inorder[1]]:
+                    if inorder[1] - i > inorder[0]:
+                        del inorder[i + 2:]
+                        inorder[0] = inorder[1] - i
+                    elif inorder[1] - i == inorder[0]:
+                        del inorder[i + 2:inorder[1] + 1]
+                    else:
+                        del inorder[i + 1:inorder[1] + 1]
+
+                    inorder[1] = i
+
+        del inorder[0:3]
+        return inorder
