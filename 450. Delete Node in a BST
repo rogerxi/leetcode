@@ -1,0 +1,38 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def deleteNode(self, root, key):
+        """
+        :type root: TreeNode
+        :type key: int
+        :rtype: TreeNode
+        """
+        # Time complexity:      O(n).
+        # Space complexity:     O(n).
+        if root:
+            if root.val == key:
+                if root.right:
+                    right_min = root.right
+                    if right_min.left:
+                        right_min_parent = root
+                        while right_min.left:
+                            right_min_parent, right_min = right_min, right_min.left
+
+                        right_min_parent.left, right_min.right = right_min.right, root.right
+
+                    right_min.left = root.left
+                    return right_min
+                else:
+                    return root.left
+
+            elif root.val > key:
+                root.left = self.deleteNode(root.left, key)
+            else:
+                root.right = self.deleteNode(root.right, key)
+
+        return root
