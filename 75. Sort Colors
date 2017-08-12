@@ -1,0 +1,51 @@
+class Solution(object):
+    def sortColors(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+#         # Dictionary or Counter.
+#         # Time complexity:      O(n).
+#         # Space complexity:     O(1).
+#         from collections import Counter
+#         counter = Counter(nums)
+#         for i in xrange(len(nums)):
+#             if counter[0] > 0:
+#                 j = 0
+#             elif counter[1] > 0:
+#                 j = 1
+#             else:
+#                 j = 2
+
+#             counter[j] -= 1
+#             nums[i] = j
+
+
+
+        # Insertion sort
+        # Time complexity:      O(n^2).
+        # Space complexity:     O(1).
+
+
+
+#         # Swap.
+#         # Time complexity:      O(n).
+#         # Space complexity:     O(1).
+#         left, right = 0, len(nums) - 1  # Border index for 1.
+#         index = 0
+#         while index <= right:
+#             if nums[index] < nums[left]:
+#                 nums[index], nums[left] = nums[left], nums[index]
+#             if nums[index] > nums[right]:
+#                 nums[index], nums[right] = nums[right], nums[index]
+#             while left < len(nums) and nums[left] == 0:
+#                 left += 1
+#                 index = left
+#             while right >= 0 and nums[right] == 2:
+#                 right -= 1
+#             if 0 <= index < len(nums) and nums[index] == 1:
+#                 index += 1
+
+
+
+        # Another concied swap solution, only consider the nums[index] == 0 or 2.
