@@ -1,0 +1,29 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: TreeNode
+        """
+        # Recursion.
+        def recurse(length, offset_pre, offset_in):
+            if length == 0:
+                return None
+
+            val = preorder[offset_pre]
+            node = TreeNode(val)
+            index_in = self.inorder_map[val]
+            node.left = recurse(index_in - offset_in, offset_pre + 1, offset_in)
+            node.right = recurse(length - (index_in - offset_in + 1), offset_pre + 1 + index_in - offset_in, index_in + 1)
+            return node
+
+        self.length = len(inorder)
+        self.inorder_map = {inorder[i]: i for i in xrange(self.length) if inorder[i] is not None}
+        return recurse(self.length, 0, 0)
