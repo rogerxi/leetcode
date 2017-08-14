@@ -1,0 +1,50 @@
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        digit_to_letters_map = {
+            '0': ' ',
+            '1': '*',
+            '2': 'abc',
+            '3': 'def',
+            '4': 'ghi',
+            '5': 'jkl',
+            '6': 'mno',
+            '7': 'pqrs',
+            '8': 'tuv',
+            '9': 'wxyz',
+        }
+        digits = ''.join(d for d in digits if d in digit_to_letters_map)
+        if not digits:
+            return []
+
+        # size = reduce(lambda x, y: x * y, [len(digit_to_letters_map[d]) for d in digits])
+        combinations = ['']
+        for d in digits:
+            size = len(combinations)
+            for l in digit_to_letters_map[d]:
+                for c in combinations[0:size]:
+                    combinations.append(c + l)
+
+            combinations = combinations[size:]
+
+        return combinations
+        
+        
+        
+    # @return a list of strings, [s1, s2]
+    def letterCombinations(self, digits):
+        if '' == digits: return []
+        kvmaps = {
+            '2': 'abc',
+            '3': 'def',
+            '4': 'ghi',
+            '5': 'jkl',
+            '6': 'mno',
+            '7': 'pqrs',
+            '8': 'tuv',
+            '9': 'wxyz'
+        }
+        return reduce(lambda acc, digit: [x + y for x in acc for y in kvmaps[digit]], digits, [''])
