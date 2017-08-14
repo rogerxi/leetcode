@@ -1,0 +1,27 @@
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        # Quick sort:
+        # Time complexity:  O(nlogn).   Worst case: O(n^2)
+        # Space complexity: O(nlogn).   Worst case: O(n^2)
+        pivot = nums[len(nums) / 2]
+        nums_larger, nums_smaller, equal_count = [], [], 0
+        for n in nums:
+            if n > pivot:
+                nums_larger.append(n)
+            elif n < pivot:
+                nums_smaller.append(n)
+            else:
+                equal_count += 1
+
+        length_nums_larger = len(nums_larger)
+        if k <= length_nums_larger:
+            return self.findKthLargest(nums_larger, k)
+        elif k <= length_nums_larger + equal_count:
+            return pivot
+        else:
+            return self.findKthLargest(nums_smaller, k - length_nums_larger - equal_count)
