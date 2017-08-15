@@ -1,0 +1,27 @@
+class Solution(object):
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # Time complexity:  O(nlogn).
+        # Space complexity: O(1).
+        if not nums:
+            return 0
+
+        lis = [nums[0]]
+        for i in xrange(1, len(nums)):
+            if nums[i] > lis[-1]:
+                lis.append(nums[i])
+            elif nums[i] < lis[-1]:
+                low, high = 0, len(lis) - 1
+                while low <= high:
+                    mid = (low + high) / 2
+                    if lis[mid] >= nums[i]:
+                        high = mid - 1
+                    else:
+                        low = mid + 1
+
+                lis[low] = nums[i]
+
+        return len(lis)
