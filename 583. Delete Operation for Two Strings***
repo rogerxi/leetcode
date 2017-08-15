@@ -1,0 +1,20 @@
+class Solution(object):
+    def minDistance(self, word1, word2):
+        """
+        :type word1: str
+        :type word2: str
+        :rtype: int
+        """
+        # DP.
+        # Time complexity:  O(mn).
+        # Space complexity: O(mn).
+        length1 = len(word1)
+        length2 = len(word2)
+        counts = [[0 for j in xrange(length2 + 1)] for i in xrange(length1 + 1)]    # Count of common sub-strings.
+        for i in xrange(1, length1 + 1):
+            for j in xrange(1, length2 + 1):
+                counts[i][j] = max(counts[i - 1][j], counts[i][j - 1])
+                if word1[i - 1] == word2[j - 1] and counts[i - 1][j] == counts[i][j - 1] == counts[i - 1][j - 1]:
+                    counts[i][j] += 1
+
+        return length1 + length2 - 2 * counts[length1][length2]
