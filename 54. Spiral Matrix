@@ -1,0 +1,26 @@
+class Solution(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        if not matrix:
+            return []
+
+        offsets = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        m, n = len(matrix), len(matrix[0])
+        index = 0
+        i, j = 0, -1
+        spiral_order = []
+        steps_current, steps_next = n, m - 1
+        while steps_current > 0:
+            offset_i, offset_j = offsets[index]
+            for _ in xrange(steps_current):
+                i += offset_i
+                j += offset_j
+                spiral_order.append(matrix[i][j])
+
+            steps_current, steps_next = steps_next, steps_current - 1
+            index = (index + 1) % 4
+
+        return spiral_order
