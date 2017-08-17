@@ -1,0 +1,36 @@
+class Solution(object):
+    def nextPermutation(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        # Time complexity:  O(n).
+        # Space complexity: O(1).
+        if nums:
+            length = len(nums)
+            index_backward = length - 1     # Index of element to be moved backwards.
+            for i in xrange(length - 2, -1, -1):
+                if nums[i] < nums[i + 1]:
+                    index_backward = i
+                    break
+                else:
+                    index_backward = i - 1
+
+            # Find element element to be moved forewards.
+            if index_backward >= 0:
+                low, high = index_backward + 1, length - 1
+                while low <= high:
+                    mid = (low + high) / 2
+                    if nums[mid] <= nums[index_backward]:
+                        high = mid - 1
+                    else:
+                        low = mid + 1
+
+                nums[high], nums[index_backward] = nums[index_backward], nums[high]
+
+            # Reverse the descending sub-array.
+            low, high = index_backward + 1, length - 1
+            while low < high:
+                nums[low], nums[high] = nums[high], nums[low]
+                low += 1
+                high -= 1
