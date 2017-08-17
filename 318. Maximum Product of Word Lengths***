@@ -1,0 +1,58 @@
+class Solution(object):
+    def maxProduct(self, words):
+        """
+        :type words: List[str]
+        :rtype: int
+        """
+        # # Time complexity:  O(n^2).
+        # # Space complexity: O(n).
+        # chars = [(set(w), len(w)) for w in words]
+        # return reduce(
+        #     lambda x, y: max(x, y),
+        #     iter([chars[i][1] * chars[j][1] for i in xrange(1, len(chars)) for j in xrange(i) if not chars[i][0].intersection(chars[j][0])]),
+        #     0)
+
+
+
+#         # Improved O(n^2) solution.
+#         # Time complexity:  O(n^2).
+#         # Space complexity: O(n).
+#         chars = sorted([(len(w), set(w)) for w in words], reverse=True)
+#         max_product = 0
+#         for i in xrange(1, len(chars)):
+#             for j in xrange(i):
+#                 product = chars[i][0] * chars[j][0]
+#                 if product < max_product:
+#                     return max_product
+#                 elif not chars[i][1].intersection(chars[j][1]):
+#                     max_product = max(max_product, product)
+
+#         return max_product
+
+
+
+        # Bit manipulation.
+        # Time complexity:  O(n^2).
+        # Space complexity: O(n).
+        length_bits = []
+        ascii_a = ord('a')
+        for w in words:
+            bit = 0
+            for c in w:
+                bit |= 1<<(ord(c) - ascii_a)
+
+            length_bits.append((len(w), bit))
+
+        length_bits = sorted(length_bits, reverse=True)
+        max_product = 0
+        for i in xrange(1, len(length_bits)):
+            if length_bits[i][0] * length_bits[0][0] <= max_product:
+                return max_product
+            for j in xrange(i):
+                product = length_bits[i][0] * length_bits[j][0]
+                if product <= max_product:
+                    break
+                elif not (length_bits[i][1] & length_bits[j][1]):
+                    max_product = product
+
+        return max_product
