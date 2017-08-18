@@ -1,0 +1,14 @@
+class Solution(object):
+    def findMaximumXOR(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        max_xor = 0
+        for i in range(31, -1, -1):
+            max_xor <<= 1
+            prefixes = {n >> i for n in nums}
+            if any(max_xor ^ 1 ^ p in prefixes for p in prefixes):
+                max_xor ^= 1
+
+        return max_xor
