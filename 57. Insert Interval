@@ -1,0 +1,38 @@
+# Definition for an interval.
+# class Interval(object):
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+class Solution(object):
+    def insert(self, intervals, newInterval):
+        """
+        :type intervals: List[Interval]
+        :type newInterval: Interval
+        :rtype: List[Interval]
+        """
+        # Binary Search.
+        # Time complexity:  O(logn).
+        # Space complexity: O(1).
+        def binary_search_index(low, high, number):
+            while low <= high:
+                mid = (low + high) / 2
+                if intervals[mid].start <= number <= intervals[mid].end:
+                    return mid
+                elif number < intervals[mid].start:
+                    high = mid - 1
+                else:
+                    low = mid + 1
+
+            return low
+
+        if not intervals:
+            return [newInterval]
+
+        length = len(intervals)
+        index_left = binary_search_index(0, length - 1, newInterval.start)
+        index_right = binary_search_index(0, length - 1, newInterval.end)
+        merged_interval = Interval(
+            min(newInterval.start, intervals[index_left].start) if index_left < length else newInterval.start,
+            intervals[index_right].end if index_right < length and newInterval.end >= intervals[index_right].start else newInterval.end)
+        return intervals[:index_left] + [merged_interval] + intervals[index_right + (index_right < length and newInterval.end >= intervals[index_right].start):]
