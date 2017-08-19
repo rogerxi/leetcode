@@ -1,0 +1,55 @@
+class Solution(object):
+    def ladderLength(self, beginWord, endWord, wordList):
+        """
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: List[str]
+        :rtype: int
+        """
+#         # TLE
+#         word_set = set(wordList)
+#         if endWord not in word_set:
+#             return 0
+
+#         word_length = len(beginWord)
+#         words_accessed, words_to_access = set(), [beginWord]
+#         path = 0
+#         while words_to_access:
+#             path += 1
+#             if endWord in words_to_access:
+#                 return path
+
+#             words_accessed.update(set(words_to_access))
+#             words_to_access = filter(
+#                 lambda x: x in word_set and x not in words_accessed,
+#                 iter([word[:i] + j + word[i + 1:] for i in range(word_length) for j in 'abcdefghijklmnopqrstuvwxyz' for word in words_to_access]))
+
+#         return 0
+
+
+
+        word_set = set(wordList)
+        if endWord not in word_set:
+            return 0
+
+        word_length = len(beginWord)
+        words_accessed, words_to_access = [set(), set()], [set([beginWord]), set([endWord])]
+        path, direction = 0, 0
+        while words_to_access[0] and words_to_access[1]:
+            path += 1
+            words_accessed[direction].update(words_to_access[direction])
+            direction_next = (direction + 1) % 2
+            words_to_access_temp = set()
+            for word in words_to_access[direction]:
+                for i in range(word_length):
+                    for j in 'abcdefghijklmnopqrstuvwxyz':
+                        word_new = word[:i] + j + word[i + 1:]
+                        if word_new in words_accessed[direction_next]:
+                            return path
+                        elif word_new in word_set and word_new not in words_accessed[direction]:
+                            words_to_access_temp.add(word_new)
+
+            words_to_access[direction] = words_to_access_temp
+            direction = direction_next
+
+        return 0
