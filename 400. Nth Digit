@@ -1,0 +1,15 @@
+class Solution(object):
+    def findNthDigit(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        number_length = 1
+        while n > 0:
+            digits_count = number_length * 9 * (10 ** (number_length - 1))
+            if n > digits_count:
+                n -= digits_count
+                number_length += 1
+            else:
+                number = 10 ** (number_length - 1) + (n - 1) / number_length
+                return (number / (10 ** (number_length - (n - 1) % number_length - 1))) % 10
