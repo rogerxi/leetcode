@@ -1,0 +1,7 @@
+class Solution(object):
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        return reduce(lambda a, b: long(a * (10 ** (x / (10 ** b) > 0))) + x / (10 ** b) % 10, xrange(10), 0) == x
