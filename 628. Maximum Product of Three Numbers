@@ -1,0 +1,65 @@
+class Solution(object):
+    def maximumProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+#         if len(nums) < 3:
+#             return
+
+#         product_max = product_min = nums[0] * nums[1] * nums[2]
+#         numbers_max, numbers_min = nums[:3], nums[:3]
+#         for n in nums[3:]:
+#             numbers_max_temp, numbers_min_temp = [], []
+#             for i, j in ((0, 1), (0, 2), (1, 2)):
+#                 product_max_temp = n * numbers_max[i] * numbers_max[j]
+#                 if product_max_temp > product_max:
+#                     numbers_max_temp = [n, numbers_max[i], numbers_max[j]]
+#                     product_max = product_max_temp
+
+#                 product_max_temp = n * numbers_min[i] * numbers_min[j]
+#                 if product_max_temp > product_max:
+#                     numbers_max_temp = [n, numbers_min[i], numbers_min[j]]
+#                     product_max = product_max_temp
+
+#                 product_min_temp = n * numbers_max[i] * numbers_max[j]
+#                 if product_min_temp < product_min:
+#                     numbers_min_temp = [n, numbers_max[i], numbers_max[j]]
+#                     product_min = product_min_temp
+
+#                 product_min_temp = n * numbers_min[i] * numbers_min[j]
+#                 if product_min_temp < product_min:
+#                     numbers_min_temp = [n, numbers_min[i], numbers_min[j]]
+#                     product_min = product_min_temp
+
+#             if numbers_max_temp:
+#                 numbers_max = numbers_max_temp
+
+#             if numbers_min_temp:
+#                 numbers_min = numbers_min_temp
+
+#         return product_max
+
+
+
+        if len(nums) < 3:
+            return
+
+        numbers = [float('inf')] * 2 + [float('-inf')] * 3   # Maintain two smallest negative numbers, and three largest numbers.
+        for n in nums:
+            if n < 0 and n <= numbers[1]:
+                numbers[1] = n
+                if numbers[1] <= numbers[0]:
+                    numbers[0], numbers[1] = numbers[1], numbers[0]
+
+            if n >= numbers[2]:
+                numbers[2] = n
+                if numbers[2] >= numbers[3]:
+                    numbers[2], numbers[3] = numbers[3], numbers[2]
+                    if numbers[3] >= numbers[4]:
+                        numbers[3], numbers[4] = numbers[4], numbers[3]
+
+        if numbers[0] != float('inf') and numbers[1] != float('inf'):
+            return max(numbers[0] * numbers[1] * numbers[4], numbers[2] * numbers[3] * numbers[4])
+        else:
+            return numbers[2] * numbers[3] * numbers[4]
