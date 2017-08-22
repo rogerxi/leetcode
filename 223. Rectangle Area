@@ -1,0 +1,18 @@
+class Solution(object):
+    def computeArea(self, A, B, C, D, E, F, G, H):
+        """
+        :type A: int
+        :type B: int
+        :type C: int
+        :type D: int
+        :type E: int
+        :type F: int
+        :type G: int
+        :type H: int
+        :rtype: int
+        """
+        total_area = (C - A) * (D - B) + (G - E) * (H - F)
+        if C - A + G - E >= max(G - A, C - E) and D - B + H - F >= max(D - F, H - B):
+            total_area -= (min(C, G) - max(A, E)) * (min(D, H) - max(B, F))
+
+        return total_area
