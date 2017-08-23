@@ -1,0 +1,20 @@
+class Solution(object):
+    def totalHammingDistance(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+
+        max_bits = 32
+        iteration_list = range(max_bits)
+        count_ones = [0] * max_bits
+        length = len(nums)
+        for n in nums:
+            binary = bin(n)[2:][::-1]
+            for i in range(len(binary)):
+                if binary[i] == '1':
+                    count_ones[i] += 1
+
+        return sum(count_ones[i] * (length - count_ones[i]) for i in iteration_list)
