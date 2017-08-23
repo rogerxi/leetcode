@@ -1,0 +1,17 @@
+class Solution(object):
+    def canCompleteCircuit(self, gas, cost):
+        """
+        :type gas: List[int]
+        :type cost: List[int]
+        :rtype: int
+        """
+        total_gas, total_cost, max_diff = 0, 0, 0
+        starting_index = 0
+        for i in xrange(len(gas) - 1, -1, -1):
+            total_gas += gas[i]
+            total_cost += cost[i]
+            if total_gas - total_cost > max_diff:
+                starting_index = i
+                max_diff = total_gas - total_cost
+
+        return starting_index if total_gas >= total_cost else -1
