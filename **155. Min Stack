@@ -1,0 +1,48 @@
+class MinStack(object):
+    from heapq import heappop, heappush
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.stack = []     # val, min val.
+
+    def push(self, x):
+        """
+        :type x: int
+        :rtype: void
+        """
+        min_val = x
+        if self.stack and self.stack[-1][1] < x:
+            min_val = self.stack[-1][1]
+
+        self.stack.append((x, min_val))
+
+    def pop(self):
+        """
+        :rtype: void
+        """
+        self.stack.pop()
+
+
+    def top(self):
+        """
+        :rtype: int
+        """
+        return self.stack[-1][0]
+
+
+    def getMin(self):
+        """
+        :rtype: int
+        """
+        return self.stack[-1][1]
+        
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(x)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
