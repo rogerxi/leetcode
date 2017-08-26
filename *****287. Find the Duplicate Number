@@ -1,0 +1,60 @@
+class Solution(object):
+    def findDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+#         # O(nlogn) time complexity, O(1) sapce complexity.
+#         low, high = 1, len(nums)
+#         while low < high:
+#             mid = (low + high) / 2
+#             if len([i for i in nums if low <= i <= mid]) > mid - low + 1:
+#                 high = mid
+#             else:
+#                 low = mid + 1
+
+#         return low
+
+
+
+#         # Smart idea from Discuss: similar to finding circle in a linked list.
+#         # O(n) time complexity, O(1) sapce complexity.
+#         length = len(nums)
+#         slow, fast = length, nums[nums[length - 1] - 1]     # Fast is as twice speedy as slow.
+#         while slow != fast:
+#             slow = nums[slow - 1]
+#             fast = nums[nums[fast - 1] - 1]
+
+#         slow = length
+#         fast = nums[nums[fast - 1] - 1]
+#         while slow != fast:
+#             slow = nums[slow - 1]
+#             fast = nums[fast - 1]
+
+#         return slow
+
+
+
+        # number and index format one circle, the answer is the entry.
+        # O(n) time and O(1) space.
+        slow = nums[0]
+        fast = nums[nums[0]]
+        while slow != fast:
+            fast = nums[nums[fast]]
+            slow = nums[slow]
+
+        slow = 0
+        while slow != fast:
+            fast = nums[fast]
+            slow = nums[slow]
+
+        return slow
+
+#         2,4,5,2,6,8,7,3,1
+#         0,1,2,3,4,5,6,7,8
+        
+#         1,2,3,4,5,6,7,8,3
+#         0,1,2,3,4,5,6,7,8
+        
+#         1,2,3,4,5,4,7,8,6
+#         0,1,2,3,4,5,6,7,8
