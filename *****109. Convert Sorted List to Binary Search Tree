@@ -1,0 +1,62 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def sortedListToBST(self, head):
+        """
+        :type head: ListNode
+        :rtype: TreeNode
+        """
+#         # O(n) time, and O(n) space.
+#         def create_bst(fr, to):
+#             if fr >= to:
+#                 return None
+
+#             mid = (fr + to) / 2
+#             tree_node = TreeNode(self.list_nodes[mid].val)
+#             tree_node.left = create_bst(fr, mid)
+#             tree_node.right = create_bst(mid + 1, to)
+#             return tree_node
+
+#         self.list_nodes = []
+#         list_node = head
+#         while list_node:
+#             self.list_nodes.append(list_node)
+#             list_node = list_node.next
+
+#         return create_bst(0, len(self.list_nodes))
+
+
+
+        # O(nlogn) time, and O(1) space.
+        # 
+        def create_bst(fr, to):
+            if fr >= to:
+                return None
+
+            mid = (fr + to) / 2
+            left = create_bst(fr, mid)
+            tree_node = TreeNode(self.list_node.val)
+            tree_node.left = left
+            self.list_node = self.list_node.next
+            tree_node.right = create_bst(mid + 1, to)
+            return tree_node
+
+        size = 0
+        list_node = head
+        while list_node:
+            size += 1
+            list_node = list_node.next
+
+        self.list_node = head
+        return create_bst(0, size)
