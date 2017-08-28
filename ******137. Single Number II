@@ -1,0 +1,17 @@
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # Think about how the number is represented in computer. Binary right? So if one number appears k times, each digit should appear k times as well.
+        return int(''.join(str(count) if index != 0 else '-' if count == 1 else '' for index, count in
+                           enumerate(reduce(lambda x, y: [(x[i] + 1) % 3 if y[i] in ('1', '-') else x[i] for i in range(33)],
+                                            iter((bin(n).replace('0b', '').zfill(33)) for n in nums), [0] * 33))),
+                   2)
+
+
+
+
+
+And another great idea: refer to https://discuss.leetcode.com/topic/455/constant-space-solution
