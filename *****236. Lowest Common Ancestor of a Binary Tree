@@ -141,3 +141,22 @@ class Solution(object):
                 node = node_to_parent_map[node]
 
         return node
+
+
+
+
+        def find_lca(node):
+            if not node:
+                return None
+            elif node == p:
+                self.p_existence = True
+            elif node == q:
+                self.q_existence = True
+
+            lca_left = find_lca(node.left)
+            lca_right = find_lca(node.right)
+            return node if node in (p, q) or (lca_left and lca_right) else lca_left or lca_right
+
+        self.p_existence = self.q_existence = False
+        node = find_lca(root)
+        return node if self.p_existence and self.q_existence else None
