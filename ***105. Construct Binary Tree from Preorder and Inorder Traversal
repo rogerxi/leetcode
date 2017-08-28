@@ -27,3 +27,17 @@ class Solution(object):
         self.length = len(inorder)
         self.inorder_map = {inorder[i]: i for i in xrange(self.length) if inorder[i] is not None}
         return recurse(self.length, 0, 0)
+
+
+
+
+
+        # Find the index of preorder[0] in inorder.
+        if preorder:
+            tree_node = TreeNode(preorder[0])
+            index_inorder = inorder.index(preorder[0])
+            tree_node.left = self.buildTree(preorder[1:index_inorder + 1], inorder[:index_inorder])
+            tree_node.right = self.buildTree(preorder[index_inorder + 1:], inorder[index_inorder + 1:])
+            return tree_node
+        else:
+            return None
