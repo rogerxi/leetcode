@@ -53,3 +53,32 @@ class Solution(object):
             direction = direction_next
 
         return 0
+
+
+
+
+
+        word_set = set(wordList)
+        queue = [(beginWord, 1)]
+        lower_letters = [chr(ord('a') + i) for i in range(26)]
+        while queue:
+            word, seq = queue.pop(0)
+            for i in range(len(word)):
+                for j in lower_letters:
+                    word_transformed = word[:i] + j + word[i + 1:]
+                    if word_transformed in word_set:
+                        if word_transformed == endWord:
+                            return seq + 1
+
+                        queue.append((word_transformed, seq + 1))
+                        word_set.remove(word_transformed)
+                        if not word_set:
+                            return 0
+
+        return 0
+
+
+class WordNeighbor(object):
+    def __init__(self, word):
+        self.word = word
+        self.neighbors = []
