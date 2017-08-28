@@ -1,0 +1,53 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def rotateRight(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+#         if not head:
+#             return None
+
+#         size = 0
+#         node = head
+#         tail = None
+#         while node:
+#             size += 1
+#             tail = node
+#             node = node.next
+
+#         k %= size
+#         if k > 0:
+#             node = head
+#             while k < size - 1:
+#                 node = node.next
+#                 k += 1
+
+#             head, node.next, tail.next = node.next, None, head
+
+#         return head
+
+
+
+        # Go through once.
+        def rotate(node, seq):
+            # Returns head, number of rotations left.
+            if not node:
+                return head, k % seq
+
+            head_, k_ = rotate(node.next, seq + 1)
+            if k_ > 0:
+                node.next = head_
+                head_ = node
+            elif k_ == 0:
+                node.next = None
+
+            return head_, k_ - 1
+
+        return rotate(head, 0)[0] if head else None
