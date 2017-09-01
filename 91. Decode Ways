@@ -1,0 +1,29 @@
+class Solution(object):
+    def numDecodings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if not s:
+            return 0
+
+        prev_two_ways, prev_one_ways = 0, 1
+        prev_char = ''
+        for c in s:
+            if prev_char == '0' or not (0 < int(prev_char + c) <= 26):
+                if c == '0':
+                    prev_one_ways = 0
+                else:
+                    prev_two_ways = prev_one_ways
+            else:
+                if c == '0':
+                    prev_two_ways, prev_one_ways = prev_one_ways, prev_two_ways
+                else:
+                    prev_two_ways, prev_one_ways = prev_one_ways, prev_one_ways + prev_two_ways
+
+            if prev_one_ways == 0:
+                break
+            else:
+                prev_char = c
+
+        return prev_one_ways
