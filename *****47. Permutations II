@@ -1,0 +1,19 @@
+class Solution(object):
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        permutations = [[]]
+        for n in nums:
+            permutations_temp = []
+            length = len(permutations[0])
+            for p in permutations:
+                for i in range(length + 1):
+                    permutations_temp.append(p[:i] + [n] + p[i:])
+                    if i < length and p[i] == n:
+                        break
+
+            permutations = permutations_temp
+
+        return permutations
