@@ -1,0 +1,20 @@
+class Solution:
+    # @param {integer[]} nums
+    # @return {string}
+    def largestNumber(self, nums):
+        if not nums:
+            return '0'
+
+        max_num = max(nums)
+        if max_num == 0:
+            return '0'
+
+        max_length = len(str(max_num))
+        fill_nums = []
+        for n in nums:
+            n_str = str(n)
+            fill_nums.append((n_str, long((n_str * 12)[:max_length]), long(n_str + n_str[-1] * (max_length - len(n_str)))))
+
+        # O(nlogn).
+        fill_nums = sorted(fill_nums, key=lambda x: (x[1], x[2]), reverse=True)
+        return ''.join(n for n, _, _ in fill_nums)
