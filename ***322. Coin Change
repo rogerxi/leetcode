@@ -1,0 +1,18 @@
+class Solution(object):
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+        if amount <= 0:
+            return 0
+
+        fewest_coins = [0] + [float('inf')] * amount
+        coins_set = set(coins)
+        for i in xrange(1, amount + 1):
+            for c in coins_set:
+                if i - c >= 0:
+                    fewest_coins[i] = min(fewest_coins[i], fewest_coins[i - c] + 1)
+
+        return -1 if fewest_coins[-1] == float('inf') else fewest_coins[-1]
