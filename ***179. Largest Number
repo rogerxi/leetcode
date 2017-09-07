@@ -18,3 +18,7 @@ class Solution:
         # O(nlogn).
         fill_nums = sorted(fill_nums, key=lambda x: (x[1], x[2]), reverse=True)
         return ''.join(n for n, _, _ in fill_nums)
+
+
+
+# Use comparator parameter. For example, list.sort(cmp=lambda x, y: ...)
