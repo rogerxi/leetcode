@@ -1,0 +1,50 @@
+class Solution(object):
+    def partition(self, s):
+        """
+        :type s: str
+        :rtype: List[List[str]]
+        """
+#         # TLE
+#         from collections import defaultdict
+
+#         def get_sub_palindromes(s):
+#             if s not in self.sub_palindromes:
+#                 self.sub_palindromes[s] = set()
+#                 self.sub_palindromes[s].add(tuple(s))
+
+#             if s and s == s[::-1]:
+#                 self.sub_palindromes[s].add((s,))
+
+#             for i in range(1, len(s)):
+#                 str1, str2 = s[:i], s[i:]
+#                 if str1 not in self.sub_palindromes:
+#                     get_sub_palindromes(str1)
+
+#                 if str2 not in self.sub_palindromes:
+#                     get_sub_palindromes(str2)
+
+#                 for p1 in self.sub_palindromes[str1]:
+#                     for p2 in self.sub_palindromes[str2]:
+#                         self.sub_palindromes[s].add(tuple(list(p1) + list(p2)))
+
+#         self.sub_palindromes = dict()                # Mapping from string to set of palindromes.
+#         get_sub_palindromes(s)
+#         return list(self.sub_palindromes[s])
+
+
+
+        
+        # DP. Consider if the current character equals to the last two sub-palindromes.
+        sub_palindromes = [[]]
+        for c in s:
+            sub_palindromes_temp = []
+            for p in sub_palindromes:
+                sub_palindromes_temp.append(p + [c])
+                if p and len(p) > 0 and p[-1] == c:
+                    sub_palindromes_temp.append(p[:-1] + [p[-1] + c])
+                if p and len(p) > 1 and p[-2] == c:
+                    sub_palindromes_temp.append(p[:-2] + [p[-2] + p[-1] + c])
+
+            sub_palindromes = sub_palindromes_temp
+
+        return sub_palindromes
