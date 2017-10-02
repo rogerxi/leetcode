@@ -1,0 +1,48 @@
+class Solution(object):
+    def countSubstrings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        # Timeout.
+#         if not s:
+#             return 0
+
+#         # Palindromic sub-strings which end with the current index.
+#         palindromic_strs = {s[0]}
+#         count = 1
+#         for i in xrange(1, len(s)):
+#             c = s[i]
+#             palindromic_strs_temp = {c}
+#             for p_str in palindromic_strs:
+#                 if i - len(p_str) - 1 >= 0 and s[i - len(p_str) - 1] == c:
+#                     palindromic_strs_temp.add(c + p_str + c)
+#                 if p_str[0] == c and (p_str[1:] == '' or p_str[1:] in palindromic_strs):
+#                     palindromic_strs_temp.add(p_str + c)
+
+#             palindromic_strs = palindromic_strs_temp
+#             count += len(palindromic_strs)
+
+#         return count
+
+
+
+        if not s:
+            return 0
+
+        # The start indexes of palindromic sub-strings which end with the current index.
+        indexes_start = {0}
+        count = 1
+        for i in xrange(1, len(s)):
+            c = s[i]
+            indexes_start_temp = {i}
+            for si in indexes_start:
+                if si > 0 and s[si - 1] == c:
+                    indexes_start_temp.add(si - 1)
+                if s[si] == c and (not s[si + 1:i] or si + 1 in indexes_start):
+                    indexes_start_temp.add(si)
+
+            indexes_start = indexes_start_temp
+            count += len(indexes_start)
+
+        return count
