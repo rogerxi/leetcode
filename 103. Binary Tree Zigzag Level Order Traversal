@@ -1,0 +1,34 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def zigzagLevelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        # Level-order traversal and then reverse odd entries.
+        if not root:
+            return []
+
+        zigzag_traversal = []
+        queue = [(root, 0)]
+        while queue:
+            node, depth = queue.pop(0)
+            if len(zigzag_traversal) <= depth:
+                zigzag_traversal.append([])                
+
+            zigzag_traversal[-1].append(node.val)
+            if node.left:
+                queue.append((node.left, depth + 1))
+            if node.right:
+                queue.append((node.right, depth + 1))
+
+        for i in range(1, len(zigzag_traversal), 2):
+            zigzag_traversal[i] = zigzag_traversal[i][::-1]
+
+        return zigzag_traversal
